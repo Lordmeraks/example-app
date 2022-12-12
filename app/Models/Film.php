@@ -18,16 +18,17 @@ class Film extends Model
         'homepage',
         'overview',
         'popularity',
-        'posterPath',
-        'releaseDate',
+        'poster_path',
+        'release_date',
         'revenue',
         'runtime',
         'tagline',
         'title',
-        'voteAverage',
-        'voteCount',
+        'vote_average',
+        'vote_count',
         'similar',
-        'trailerYt',
+        'trailer_yt',
+        'external_ids',
     ];
 
     public function directors(): BelongsToMany

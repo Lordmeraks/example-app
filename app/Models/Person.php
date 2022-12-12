@@ -13,7 +13,7 @@ class Person extends Model
     protected $table = 'person';
 
     protected $fillable = [
-        'fullName',
+        'full_name',
     ];
 
     public function directorInFilms(): BelongsToMany
