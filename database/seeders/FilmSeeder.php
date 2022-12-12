@@ -17,31 +17,31 @@ class FilmSeeder extends Seeder
 
     public function run()
     {
-        $path = storage_path()."/app/public/tmdb_movies.json";
+        $path = storage_path() . "/app/public/tmdb_movies.json";
         $string = file_get_contents($path);
         $json_file = json_decode($string, true);
         $count = 0;
         $total = count($json_file);
         foreach ($json_file as $filmParsed) {
             $film = new Film();
-            $film->budget = $filmParsed['budget']??null;
-            $film->homepage = $filmParsed['homepage']??null;
-            $film->overview = $filmParsed['overview']??null;
-            $film->popularity = $filmParsed['popularity']??null;
-            $film->poster_path = $filmParsed['poster_path']??null;
-            $film->release_date = $filmParsed['release_date']??null;
-            $film->revenue = $filmParsed['revenue']??null;
-            $film->runtime = $filmParsed['runtime']??null;
-            $film->tagline = $filmParsed['tagline']??null;
-            $film->title = $filmParsed['title']??null;
-            $film->vote_average = $filmParsed['vote_average']??null;
-            $film->vote_count = $filmParsed['vote_count']??null;
-            $film->similar = json_encode($filmParsed['similar']??null);
-            $film->trailer_yt = $filmParsed['trailer_yt']??null;
-            $film->external_ids = json_encode($filmParsed['external_ids']??null);
-            $language = Language::firstOrCreate(['name' => $filmParsed['original_language']??'']);
+            $film->budget = $filmParsed['budget'] ?? null;
+            $film->homepage = $filmParsed['homepage'] ?? null;
+            $film->overview = $filmParsed['overview'] ?? null;
+            $film->popularity = $filmParsed['popularity'] ?? null;
+            $film->poster_path = $filmParsed['poster_path'] ?? null;
+            $film->release_date = $filmParsed['release_date'] ?? null;
+            $film->revenue = $filmParsed['revenue'] ?? null;
+            $film->runtime = $filmParsed['runtime'] ?? null;
+            $film->tagline = $filmParsed['tagline'] ?? null;
+            $film->title = $filmParsed['title'] ?? null;
+            $film->vote_average = $filmParsed['vote_average'] ?? null;
+            $film->vote_count = $filmParsed['vote_count'] ?? null;
+            $film->similar = json_encode($filmParsed['similar'] ?? null);
+            $film->trailer_yt = $filmParsed['trailer_yt'] ?? null;
+            $film->external_ids = json_encode($filmParsed['external_ids'] ?? null);
+            $language = Language::firstOrCreate(['name' => $filmParsed['original_language'] ?? '']);
             $film->originalLanguage()->associate($language);
-            $certification = Certification::firstOrCreate(['name' => $filmParsed['certification']??'']);
+            $certification = Certification::firstOrCreate(['name' => $filmParsed['certification'] ?? '']);
             $film->certification()->associate($certification);
             $film->save();
             if (is_array($filmParsed['genres'])) {
@@ -67,7 +67,7 @@ class FilmSeeder extends Seeder
             }
             $film->save();
             $count++;
-            var_dump('Done '.round(($count/$total)*100, 2).'%');
+            var_dump('Done ' . round(($count / $total) * 100, 2) . '%');
         }
     }
 }
