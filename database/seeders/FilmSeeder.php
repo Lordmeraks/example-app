@@ -7,10 +7,7 @@ use App\Models\Film;
 use App\Models\Genre;
 use App\Models\Language;
 use App\Models\Person;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 
 class FilmSeeder extends Seeder
 {
