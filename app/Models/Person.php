@@ -4,38 +4,29 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Person extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 'person';
+
     protected $fillable = [
         'fullName',
     ];
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'person';
-
-    public function directorInFilms(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function directorInFilms(): BelongsToMany
     {
         return $this->belongsToMany(Film::class, 'film_director', 'person_id', 'film_id');
     }
 
-    public function writerInFilms(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function writerInFilms(): BelongsToMany
     {
         return $this->belongsToMany(Film::class, 'film_writer', 'person_id', 'film_id');
     }
 
-    public function castInFilms(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function castInFilms(): BelongsToMany
     {
         return $this->belongsToMany(Film::class, 'film_cast', 'person_id', 'film_id');
     }
