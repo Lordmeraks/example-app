@@ -30,7 +30,6 @@ return new class extends Migration
             $table->integer('vote_count');
             $table->json('external_ids');
             $table->json('similar');
-            $table->unsignedBigInteger('certification_id');
             $table->foreignId('certification_id')->constrained('certification');
             $table->string('trailer_yt');
             $table->timestamps();
