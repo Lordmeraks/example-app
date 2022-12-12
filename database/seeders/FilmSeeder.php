@@ -17,8 +17,11 @@ class FilmSeeder extends Seeder
         $path = storage_path() . "/app/public/tmdb_movies.json";
         $string = file_get_contents($path);
         $json_file = json_decode($string, true);
-        $count = 0;
         $total = count($json_file);
+
+        $bar = $this->command->getOutput()->createProgressBar($total);
+        $bar->start();
+
         foreach ($json_file as $filmParsed) {
             $film = new Film();
             $film->budget = $filmParsed['budget'] ?? null;
@@ -63,8 +66,8 @@ class FilmSeeder extends Seeder
                 $film->cast()->attach($person);;
             }
             $film->save();
-            $count++;
-            var_dump('Done ' . round(($count / $total) * 100, 2) . '%');
+            $bar->advance();
         }
+        $bar->finish();
     }
 }
