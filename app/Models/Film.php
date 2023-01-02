@@ -33,22 +33,42 @@ class Film extends Model
 
     public function directors(): BelongsToMany
     {
-        return $this->belongsToMany(Person::class, 'film_director', 'film_id', 'person_id');
+        return $this->belongsToMany(
+            Person::class,
+            'film_director',
+            'film_id',
+            'person_id'
+        );
     }
 
     public function writers(): BelongsToMany
     {
-        return $this->belongsToMany(Person::class, 'film_writer', 'film_id', 'person_id');
+        return $this->belongsToMany(
+            Person::class,
+            'film_writer',
+            'film_id',
+            'person_id'
+        );
     }
 
     public function cast(): BelongsToMany
     {
-        return $this->belongsToMany(Person::class, 'film_cast', 'film_id', 'person_id');
+        return $this->belongsToMany(
+            Person::class,
+            'film_cast',
+            'film_id',
+            'person_id'
+        );
     }
 
     public function genres(): BelongsToMany
     {
-        return $this->belongsToMany(Genre::class, 'film_genre', 'film_id', 'genre_id');
+        return $this->belongsToMany(
+            Genre::class,
+            'film_genre',
+            'film_id',
+            'genre_id'
+        );
     }
 
     public function originalLanguage(): BelongsTo
