@@ -25,7 +25,7 @@ return new class extends Migration
             $table->bigInteger('revenue')->nullable();
             $table->integer('runtime')->nullable();
             $table->string('tagline')->nullable();
-            $table->string('title')->nullable();
+            $table->string('title');
             $table->decimal('vote_average', 3, 1)->nullable();
             $table->integer('vote_count')->nullable();
             $table->json('external_ids')->nullable();
