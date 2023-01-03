@@ -15,14 +15,9 @@ class FilmController extends Controller
      */
     public function index(Request $request)
     {
-        $queryFilms = Film::query()
-            ->with('genres')
-            ->with('cast')
-            ->with('directors')
-            ->with('writers')
-            ->with('originalLanguage')
-            ->with('certification')
-            ->orderBy('title', 'asc');
+        $filters = $request->get('filters');
+        $filters = is_array($filters) ? $filters : [];
+        $queryFilms = Film::getWithFilters($filters);
         $films = $queryFilms->paginate(20);
 
         return new FilmCollection($films);
