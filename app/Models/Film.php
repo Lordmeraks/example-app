@@ -91,7 +91,7 @@ class Film extends Model
             ->with('originalLanguage')
             ->with('certification');
         foreach ($search as $value) {
-            $query->where(function ($query) use ($value){
+            $query->where(function ($query) use ($value) {
                 $query
                     ->orWhere('title', 'like', "%$value%")
                     ->orWhereHas('originalLanguage', function ($query) use ($value) {
@@ -108,8 +108,7 @@ class Film extends Model
                     })
                     ->orWhereHas('writers', function ($query) use ($value) {
                         $query->where('full_name', 'like', "%$value%");
-                    })
-                ;
+                    });
             });
         }
         foreach ($filters as $filter => $value) {
