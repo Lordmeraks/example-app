@@ -81,7 +81,7 @@ class Film extends Model
         return $this->belongsTo(Certification::class, 'certification_id');
     }
 
-    public static function getWithFilters($filters = [])
+    public static function getWithFilters($filters = [], $search = [])
     {
         $query = self::query()
             ->with('genres')
@@ -90,6 +90,28 @@ class Film extends Model
             ->with('writers')
             ->with('originalLanguage')
             ->with('certification');
+        foreach ($search as $value) {
+            $query->where(function ($query) use ($value){
+                $query
+                    ->orWhere('title', 'like', "%$value%")
+                    ->orWhereHas('originalLanguage', function ($query) use ($value) {
+                        $query->where('name', 'like', "%$value%");
+                    })
+                    ->orWhereHas('genres', function ($query) use ($value) {
+                        $query->where('name', 'like', "%$value%");
+                    })
+                    ->orWhereHas('cast', function ($query) use ($value) {
+                        $query->where('full_name', 'like', "%$value%");
+                    })
+                    ->orWhereHas('directors', function ($query) use ($value) {
+                        $query->where('full_name', 'like', "%$value%");
+                    })
+                    ->orWhereHas('writers', function ($query) use ($value) {
+                        $query->where('full_name', 'like', "%$value%");
+                    })
+                ;
+            });
+        }
         foreach ($filters as $filter => $value) {
             switch ($filter) {
                 case 'title':

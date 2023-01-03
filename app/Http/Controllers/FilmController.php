@@ -16,8 +16,10 @@ class FilmController extends Controller
     public function index(Request $request)
     {
         $filters = $request->get('filters');
+        $search = $request->get('search');
+        $searchArray = !empty($search)?explode(' ', $search): [];
         $filters = is_array($filters) ? $filters : [];
-        $queryFilms = Film::getWithFilters($filters);
+        $queryFilms = Film::getWithFilters($filters, $searchArray);
         $films = $queryFilms->paginate(20);
 
         return new FilmCollection($films);
