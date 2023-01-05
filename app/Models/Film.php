@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\FilterableInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use LaravelIdea\Helper\App\Models\_IH_Film_QB;
 
-class Film extends Model
+class Film extends Model implements FilterableInterface
 {
     use HasFactory;
 
@@ -81,7 +84,7 @@ class Film extends Model
         return $this->belongsTo(Certification::class, 'certification_id');
     }
 
-    public static function getWithFilters($filters = [], $search = [])
+    public static function getWithFilters($filters = [], $search = []): _IH_Film_QB|Builder
     {
         $query = self::query()
             ->with('genres')
@@ -156,5 +159,16 @@ class Film extends Model
             }
         }
         return $query->orderBy('title', 'asc');
+    }
+
+    public static function getQueryForFilters(): Builder
+    {
+        return self::query()
+            ->with('genres')
+            ->with('cast')
+            ->with('directors')
+            ->with('writers')
+            ->with('originalLanguage')
+            ->with('certification');
     }
 }
