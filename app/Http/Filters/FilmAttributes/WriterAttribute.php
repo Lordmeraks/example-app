@@ -2,11 +2,11 @@
 
 namespace App\Http\Filters\FilmAttributes;
 
-class CastAttribute extends AbstractAttribute
+class WriterAttribute extends AbstractAttribute
 {
     protected function initAttribute(): void
     {
-        $this->relation = 'cast';
+        $this->relation = 'writers';
         $this->attribute = 'full_name';
     }
 }

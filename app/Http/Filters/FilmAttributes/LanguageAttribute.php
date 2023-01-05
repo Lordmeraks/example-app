@@ -4,18 +4,16 @@ namespace App\Http\Filters\FilmAttributes;
 
 use Illuminate\Database\Eloquent\Builder;
 
-class GenreAttribute extends AbstractAttribute
+class LanguageAttribute extends AbstractAttribute
 {
     protected function initAttribute(): void
     {
-        $this->relation = 'genres';
+        $this->relation = 'originalLanguage';
         $this->attribute = 'name';
     }
 
     public function applyFilter(Builder $builder, $value): Builder
     {
-        return $builder->whereHas($this->relation, function ($query) use ($value) {
-            $query->whereIn('id', $value);
-        });
+        return $builder->where('original_language_id', $value);
     }
 }

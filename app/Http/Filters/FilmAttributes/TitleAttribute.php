@@ -2,18 +2,10 @@
 
 namespace App\Http\Filters\FilmAttributes;
 
-use Illuminate\Database\Eloquent\Builder;
-
-class TitleAttribute implements \App\Http\Filters\FilterAttributeInterface
+class TitleAttribute extends AbstractAttribute
 {
-
-    public function applySimple(Builder $builder, $value): Builder
+    protected function initAttribute(): void
     {
-        // TODO: Implement applySimple() method.
-    }
-
-    public function applyFilter(Builder $builder, $value): Builder
-    {
-        // TODO: Implement applyFilter() method.
+        $this->attribute = 'title';
     }
 }

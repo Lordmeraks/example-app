@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\FilmFilter;
 use App\Http\Resources\FilmCollection;
 use App\Models\Film;
-use Illuminate\Http\Request;
 
 class FilmController extends Controller
 {
@@ -13,13 +13,12 @@ class FilmController extends Controller
      *
      * @return FilmCollection
      */
-    public function index(Request $request)
+    public function index(FilmFilter $filmFilter)
     {
-        $filters = $request->get('filters');
-        $search = $request->get('search');
-        $searchArray = !empty($search)?explode(' ', $search): [];
-        $filters = is_array($filters) ? $filters : [];
-        $queryFilms = Film::getWithFilters($filters, $searchArray);
+        $queryFilms = Film::getQueryForFilters();
+        $queryFilms = $filmFilter->applySimpleSearch($queryFilms);
+        $queryFilms = $filmFilter->applyFilters($queryFilms);
+        $queryFilms = $queryFilms->orderBy('title');
         $films = $queryFilms->paginate(20);
 
         return new FilmCollection($films);
