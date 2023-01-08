@@ -2,7 +2,10 @@
 
 namespace App\Http\Filters\FilmAttributes;
 
+use App\Http\Resources\LanguageResource;
+use App\Models\Language;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class LanguageAttribute extends AbstractAttribute
 {
@@ -15,5 +18,10 @@ class LanguageAttribute extends AbstractAttribute
     public function applyFilter(Builder $builder, $value): Builder
     {
         return $builder->where('original_language_id', $value);
+    }
+
+    public static function getOptions(): AnonymousResourceCollection|array
+    {
+        return LanguageResource::collection(Language::all());
     }
 }

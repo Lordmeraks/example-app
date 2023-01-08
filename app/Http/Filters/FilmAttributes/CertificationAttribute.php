@@ -2,16 +2,17 @@
 
 namespace App\Http\Filters\FilmAttributes;
 
-use App\Http\Resources\GenreResource;
-use App\Models\Genre;
+use App\Http\Resources\CertificationResource;
+use App\Models\Certification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class GenreAttribute extends AbstractAttribute
+class CertificationAttribute extends AbstractAttribute
 {
+
     protected function initAttribute(): void
     {
-        $this->relation = 'genres';
+        $this->relation = 'certification';
         $this->attribute = 'name';
     }
 
@@ -24,6 +25,6 @@ class GenreAttribute extends AbstractAttribute
 
     public static function getOptions(): AnonymousResourceCollection|array
     {
-        return GenreResource::collection(Genre::all());
+        return CertificationResource::collection(Certification::all());
     }
 }

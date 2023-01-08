@@ -2,8 +2,8 @@
 
 namespace App\Http\Filters;
 
+use App\Http\Requests\FilmRequest;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 
 class FilmFilter
 {
@@ -22,13 +22,10 @@ class FilmFilter
         'writer'
     ];
 
-
-    public function __construct(Request $request)
+    public function __construct(FilmRequest $request)
     {
-        $filters = $request->get('filters');
-        $search = $request->get('search');
-        $this->searchArray = !empty($search) ? explode(' ', $search) : [];
-        $this->filters = is_array($filters) ? $filters : [];
+        $this->searchArray = $request->getSearch();
+        $this->filters = $request->getFilters();
     }
 
     public function applySimpleSearch(Builder $builder): Builder

@@ -4,6 +4,7 @@ namespace App\Http\Filters\FilmAttributes;
 
 use App\Http\Filters\FilterAttributeInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 abstract class AbstractAttribute implements FilterAttributeInterface
 {
@@ -23,7 +24,7 @@ abstract class AbstractAttribute implements FilterAttributeInterface
             return $builder->orWhere($this->attribute, 'like', "%$value%");
         } else {
             return $builder->orWhereHas($this->relation, function ($query) use ($value) {
-                $query->where($this->attribute, 'like', "%$value%");
+                $query->where($query->from.'.'.$this->attribute, 'like', "%$value%");
             });
         }
     }
@@ -34,8 +35,13 @@ abstract class AbstractAttribute implements FilterAttributeInterface
             return $builder->where($this->attribute, 'like', "%$value%");
         } else {
             return $builder->whereHas($this->relation, function ($query) use ($value) {
-                $query->where($this->attribute, 'like', "%$value%");
+                $query->where($query->from.'.'.$this->attribute, 'like', "%$value%");
             });
         }
+    }
+
+    public static function getOptions(): AnonymousResourceCollection|array
+    {
+        return [];
     }
 }
