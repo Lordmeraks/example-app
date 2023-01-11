@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Filters\FilmAttributes;
+namespace App\Filters\FilmAttributes;
+
+use App\Filters\AbstractAttribute;
 
 class TitleAttribute extends AbstractAttribute
 {

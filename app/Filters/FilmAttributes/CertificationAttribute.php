@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Filters\FilmAttributes;
+namespace App\Filters\FilmAttributes;
 
+use App\Filters\AbstractAttribute;
 use App\Http\Resources\CertificationResource;
 use App\Models\Certification;
 use Illuminate\Database\Eloquent\Builder;

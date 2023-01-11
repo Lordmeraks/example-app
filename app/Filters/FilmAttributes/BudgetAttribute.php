@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Filters\FilmAttributes;
+namespace App\Filters\FilmAttributes;
 
+use App\Filters\AbstractAttribute;
 use Illuminate\Database\Eloquent\Builder;
 
 class BudgetAttribute extends AbstractAttribute
@@ -29,7 +30,9 @@ class BudgetAttribute extends AbstractAttribute
     public function applyFilter(Builder $builder, $value): Builder
     {
         return match ($value) {
-            1 => $builder->where($this->attribute, '<=', 100000)->orWhereNull($this->attribute),
+            1 => $builder->where(function ($query) {
+                $query->where($this->attribute, '<=', 100000)->orWhereNull($this->attribute);
+            }),
             2 => $builder->whereBetween($this->attribute, [100000, 100000000]),
             3 => $builder->where($this->attribute, '>=', 100000000),
         };

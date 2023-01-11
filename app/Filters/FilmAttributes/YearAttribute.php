@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Filters\FilmAttributes;
+namespace App\Filters\FilmAttributes;
 
+use App\Filters\AbstractAttribute;
 use Illuminate\Database\Eloquent\Builder;
 
 class YearAttribute extends AbstractAttribute

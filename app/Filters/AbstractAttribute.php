@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Filters\FilmAttributes;
+namespace App\Filters;
 
-use App\Http\Filters\FilterAttributeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 abstract class AbstractAttribute implements FilterAttributeInterface
 {
     protected string|null $relation;
-    protected string $attribute;
+    protected string|array $attribute;
+    protected AbstractFilterService $filterService;
 
-    public function __construct()
+    public function __construct(AbstractFilterService $filterService)
     {
+        $this->filterService = $filterService;
         $this->initAttribute();
     }
 

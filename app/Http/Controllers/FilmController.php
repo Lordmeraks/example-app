@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Filters\FilmAttributes\BudgetAttribute;
-use App\Http\Filters\FilmAttributes\CertificationAttribute;
-use App\Http\Filters\FilmAttributes\GenreAttribute;
-use App\Http\Filters\FilmAttributes\LanguageAttribute;
-use App\Http\Filters\FilmAttributes\RateAttribute;
-use App\Http\Filters\FilmFilter;
+use App\Filters\FilmAttributes\BudgetAttribute;
+use App\Filters\FilmAttributes\CertificationAttribute;
+use App\Filters\FilmAttributes\GenreAttribute;
+use App\Filters\FilmAttributes\LanguageAttribute;
+use App\Filters\FilmAttributes\RateAttribute;
+use App\Filters\FilmFilter;
 use App\Http\Resources\FilmCollection;
 use App\Models\Film;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class FilmController extends Controller
 {
@@ -18,18 +20,17 @@ class FilmController extends Controller
      *
      * @return FilmCollection
      */
-    public function index(FilmFilter $filmFilter)
+    public function index(FilmFilter $filmFilter): ResourceCollection
     {
-        $queryFilms = Film::getQueryForFilters();
-        $queryFilms = $filmFilter->applySimpleSearch($queryFilms);
-        $queryFilms = $filmFilter->applyFilters($queryFilms);
-        $queryFilms = $queryFilms->orderBy('title');
-        $films = $queryFilms->paginate(20);
+        $films = $filmFilter
+            ->applyFilters(Film::getQueryForFilters())
+            ->orderBy('title')
+            ->paginate(20);
 
         return new FilmCollection($films);
     }
 
-    public function filters()
+    public function filters(): JsonResponse
     {
         return response()->json([
             'title' => [

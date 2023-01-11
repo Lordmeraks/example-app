@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Filters\FilmAttributes;
+namespace App\Filters\FilmAttributes;
 
+use App\Filters\AbstractAttribute;
 use App\Http\Resources\LanguageResource;
 use App\Models\Language;
 use Illuminate\Database\Eloquent\Builder;
