@@ -32,7 +32,7 @@ class FilmRequest extends FormRequest
     public function getFilters(): array
     {
         $validated = $this->safe()->only(['filters']);
-        return $validated['filters'];
+        return $validated['filters']??[];
     }
 
     public function getSearch(): array
