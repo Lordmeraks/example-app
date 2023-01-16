@@ -4,14 +4,17 @@ namespace App\Models;
 
 use App\Models\Interfaces\FilterableInterface;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Orchid\Filters\Filterable;
+use Orchid\Filters\Types\Like;
+use Orchid\Filters\Types\Where;
+use Orchid\Screen\AsSource;
 
 class Film extends Model implements FilterableInterface
 {
-    use HasFactory;
+    use AsSource, Filterable;
 
     protected $table = 'film';
 
@@ -31,6 +34,27 @@ class Film extends Model implements FilterableInterface
         'similar',
         'trailer_yt',
         'external_ids',
+    ];
+
+    protected array $allowedFilters = [
+        'id'         => Where::class,
+        'title'      => Like::class,
+        'updated_at' => Like::class,
+        'created_at' => Like::class,
+    ];
+
+    /**
+     * The attributes for which can use sort in url.
+     *
+     * @var array
+     */
+    protected array $allowedSorts = [
+        'id',
+        'title',
+        'budget',
+        'vote_average',
+        'updated_at',
+        'created_at',
     ];
 
     public function directors(): BelongsToMany
