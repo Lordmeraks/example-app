@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Orchid\Filters\Filterable;
-use Orchid\Filters\Types\Like;
-use Orchid\Filters\Types\Where;
 use Orchid\Screen\AsSource;
 
 class Film extends Model implements FilterableInterface
@@ -37,10 +35,13 @@ class Film extends Model implements FilterableInterface
     ];
 
     protected array $allowedFilters = [
-        'id'         => Where::class,
-        'title'      => Like::class,
-        'updated_at' => Like::class,
-        'created_at' => Like::class,
+        'id',
+        'title',
+        'budget',
+        'vote_average',
+        'original_language_id',
+        'updated_at',
+        'created_at',
     ];
 
     /**
